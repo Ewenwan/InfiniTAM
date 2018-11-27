@@ -1,5 +1,30 @@
 # InfiniTAM v3
+	
+	最近需要做 动态语义slam，
+	经过一番搜寻从DynSLAM（https://github.com/AndreiBarsan/DynSLAM）
+	找到了 InfiniTAM (实时3d目标跟踪与重建) 的 开源实现。
+	
+	
+	InfiniTAM是基于voxel hashing基础上做的，我们先对voxel hashing介绍。
+	参考文献：”Real-time 3D Reconstruction at Scale using Voxel Hashing”。
+	Algorithm Overview
 
+	和 KinectFusion 一样也是利用 TSDF 模型对重建进行建模，只是在建模的时候，
+	不是对整个空间都划分等大小的网格，只是在场景表面的周围划分网格。
+	
+	
+	为解决 volumetric fusion 重建时，重建的空间划分成等大小的 voxel，显存消耗太多，难以重建大场景，
+	并且大量 voxel 更新耗费 GPU 资源问题，斯坦福图形学组提出了 voxel hashing 算法（
+	参考文献：”Real-time 3D Reconstruction at Scale using Voxel Hashing”），
+	voxel hashing 只在相机测量到的场景表面划分 voxel，而不是将整个空间都划分成 voxel，从而节省显存。
+	算法用 hash 表的形式存储在场景表面划分的 voxel block（8x8x8 voxels），方便 voxel block 的查询。
+	算法代码开源。InfiniTAM 是对 voxel hashing 的改进，算法速度更快，
+	适合在移动端运行。BunldeFusion mapping 部分 code 和 voxel hashing 是一样的。
+	
+[voxel hashing 解析](https://blog.csdn.net/fuxingyin/article/details/51707057)
+
+
+	
 This is the main branch of the software bundle "InfiniTAM", the current version is actively maintained by:
 
   Victor Adrian Prisacariu <victor@robots.ox.ac.uk>  
